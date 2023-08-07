@@ -14,7 +14,7 @@ const socketContext = createContext();
 
     const newSocket = io.connect(
       
-      process.env.FRONTEND,
+      process.env.BACK_END_URL,
       { query: { id } }
     )
     setSocket(newSocket)
