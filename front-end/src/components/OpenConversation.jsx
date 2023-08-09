@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useSocket } from '../contexts/SocketProvider';
 import { useContacts } from '../contexts/ContactsProvider';
 import useLocalStorage from '../utils/useLocalStorage';
 import { AiOutlineMenu } from "react-icons/ai"
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 const OpenConversation = ({ id, isOpen, setIsOpen }) => {
   const socket = useSocket();
   const [messageData, setMessageData] = useState('');
   const { selectedContactId } = useContacts();
   const [messages, setMessages] = useLocalStorage('messages', []);
+  const messagesEndRef = useRef(null); // Create a ref for the scroll target
 
   const handleSendMessage = useCallback((e) => {
     e.preventDefault();
@@ -23,7 +25,7 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
 
 
   const receiveMessage = useCallback(({ sender, selectedContactId, messageData }) => {
-    
+
     setMessages(prev => [...prev, { sender, selectedContactId, messageData }]);
 
   }, [setMessages]);
@@ -38,6 +40,9 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
     };
   }, [socket, receiveMessage]);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); // Scroll to bottom on message update
+  }, [messages]);
 
   const conversationMessages = messages.filter(
     message =>
@@ -46,9 +51,10 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
   );
 
   return (
-    <div className='z-0 absolute h-[100%] w-[100%]  flex flex-col bg-gray-900 md:relative md:w-[75%]'>
-      <div className='h-8 w-[100%] flex items-center bg-gray-500 md:hidden' >
-        <div className='w-[100%] flex justify-between px-4 items-center'>
+    <div className='z-0 absolute right-0 top-0 min-h-full w-[100%] flex flex-col bg-gray-900 
+    md:w-[75%] '>
+      <div className='fixed z-10 h-8 w-[100%] flex items-center bg-gray-500 md:hidden' >
+        <div className=' w-[100%] flex justify-between px-4 items-center'>
           <p className='text-white'>Chatt App</p>
           {
             isOpen ?
@@ -57,35 +63,39 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
           }
         </div>
       </div>
-      <div className='flex flex-col gap-4 mt-4'>
+      <ScrollToBottom className='flex flex-col gap-4 p-4 pb-20'>
         {
           conversationMessages.length > 0 ? (
             conversationMessages.map((item, index) => (
               <div
                 key={index}
-                className={` font-medium text-white flex flex-wrap  ${item.sender === id ? 'ml-auto justify-end' : 'mr-auto '}`}
+                className={` font-medium text-white flex flex-wrap p-1 ${item.sender === id ? 'ml-auto justify-end' : 'mr-auto '}`}
               >
                 <p className='inline bg-sky-600  px-3 py-1 rounded-full'> {item.messageData} </p>
               </div>
             ))
           )
             : (
-              <p className='text-white text-center font-bold pt-8 text-3xl' >Select Contact before starting a chat</p>
+              <p className='text-white text-center font-bold pt-8 text-xl md:text-3xl' >Select Contact before starting a chat</p>
             )
 
         }
+        <div ref={messagesEndRef} /> {/* Scroll target */}
+      </ScrollToBottom>
+      <div className='w-[100%] flex justify-center bg-green-700' >
+        <form
+          onSubmit={handleSendMessage}
+          className='fixed w-[70%] bottom-4 flex justify-center items-center  '>
+          <input type="text"
+            placeholder='write your message'
+            value={messageData}
+            onChange={(e) => setMessageData(e.target.value)}
+            className='h-8 w-[70%] px-2 focus:outline-none bg-gray-700 text-white placeholder:text-gray-400' />
+          <button
+            className='h-8 w-16 text-white bg-gradient-to-r from-blue-600 to-violet-600'>send</button>
+        </form>
       </div>
-      <form
-        onSubmit={handleSendMessage}
-        className='absolute w-[100%] bottom-4 flex justify-center items-center'>
-        <input type="text"
-          placeholder='write your message'
-          value={messageData}
-          onChange={(e) => setMessageData(e.target.value)}
-          className='h-8 w-[70%] px-2 focus:outline-none bg-gray-700 text-white placeholder:text-gray-400' />
-        <button
-          className='h-8 w-16 text-white bg-gradient-to-r from-blue-600 to-violet-600'>send</button>
-      </form>
+      {/* <div className='absolute right-0 w-[90%] h-full bg-yellow-500 ' >sdsd</div> */}
     </div>
   )
 }

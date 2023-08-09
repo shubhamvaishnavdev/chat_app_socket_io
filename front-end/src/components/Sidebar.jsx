@@ -4,14 +4,12 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 const Sidebar = ({ id, isOpen, setIsOpen }) => {
 
-
-
     return (
-        <div className={`${isOpen ? 'z-10 w-[80%] inline-block' : 'hidden'} h-full md:w-[25%] bg-gray-600 md:inline-block`}>
-            <div className='h-[8%] flex items-center border-2 border-l-0 border-black'>
-                <button 
-                    className='w-full py-2  text-white font-semibold' 
-                >Contacts</button>
+        <div className={`${isOpen ? 'fixed z-10 w-[80%] inline-block' : 'hidden'} 
+        md:fixed md:block md:w-[25%] md:left-0  h-full  bg-gray-600 `}>
+            <div className='h-[8%] flex items-center border-2 border-black'>
+                <p className='w-full py-2 text-center text-white font-semibold' 
+                >Contacts</p>
                 <AiOutlineClose onClick={()=>setIsOpen(false)} 
                 className='text-white text-3xl font-bold pr-2 md:hidden' />
             </div>

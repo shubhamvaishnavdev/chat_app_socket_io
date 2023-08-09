@@ -43,7 +43,7 @@ const Contacts = ({ id }) => {
             ))
             
             ) :
-          (<p className='text-white' >Create new contacts from below</p>)
+          (<p className='text-white p-2' >Create new contacts from below</p>)
         }
       </div>
       <div>
