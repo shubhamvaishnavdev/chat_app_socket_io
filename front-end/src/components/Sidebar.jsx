@@ -13,7 +13,7 @@ const Sidebar = ({ id, isOpen, setIsOpen }) => {
                     className='w-full py-2  text-white font-semibold' 
                 >Contacts</button>
                 <AiOutlineClose onClick={()=>setIsOpen(false)} 
-                className='text-white text-3xl font-bold pr-2' />
+                className='text-white text-3xl font-bold pr-2 md:hidden' />
             </div>
             <div className='h-[92%] border-black border-2 border-y-0 bg-gray-800'>
                 {
