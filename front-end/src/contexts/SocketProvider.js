@@ -14,7 +14,7 @@ const socketContext = createContext();
 
     const newSocket = io.connect(
       
-      process.env.BACK_END_URL,
+      process.env.REACT_APP_BACK_END_URL,
       { query: { id } }
     )
     setSocket(newSocket)
@@ -22,6 +22,7 @@ const socketContext = createContext();
     return () => newSocket.close()
   }, [id])
 
+  // console.log("process.env.REACT_APP_BACK_END_URL at socket provider: " + process.env.REACT_APP_BACK_END_URL);
   return (
     <socketContext.Provider value={socket}>
       {children}

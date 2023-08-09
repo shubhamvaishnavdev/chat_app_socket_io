@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import useLocalStorage from '../utils/useLocalStorage'
-import { ToastContainer,toast } from 'react-toastify';
+import { useNotify } from './NotificationProvider';
 
 const contactContext = createContext();
 
@@ -11,27 +11,13 @@ function useContacts() {
 const ContactsProvider = ({ children }) => {
   const [contacts, setContacts] = useLocalStorage('contacts', []);
   const [selectedContactId,setSelectedContactId] = useState (1);
+  const {notify} = useNotify();
 
-  const notify = (type) => {
-    switch (type) {
-      case 'SUCCESS':
-        toast.success("ID Copied",
-          { position: toast.POSITION.TOP_CENTER }
-        );
-        break;
-
-      case 'ERROR':
-        toast.error("something worng!!",
-          { position: toast.POSITION.TOP_CENTER }
-        );
-        break;
-      default: toast("error")
-        break;
-    }
-  };
+  
 
     function createContact (id, name) {
     setContacts((prev) => {
+      notify('CONTACT_ADDED')
       return [...prev, { id, name }]
     })
   };
@@ -43,7 +29,7 @@ const ContactsProvider = ({ children }) => {
   
 
   return (
-    <contactContext.Provider value={{ contacts, createContact,selectContactForConversation,selectedContactId,notify, ToastContainer }}>
+    <contactContext.Provider value={{ contacts,setContacts, createContact,selectContactForConversation,selectedContactId }}>
       {children}
     </contactContext.Provider>
   )
