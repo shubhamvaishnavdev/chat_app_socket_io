@@ -63,7 +63,7 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
           }
         </div>
       </div>
-      <ScrollToBottom className='flex flex-col gap-4 p-4 pb-20'>
+      <ScrollToBottom className='flex flex-col gap-4 px-4 pt-10 pb-20 md:pt-4 overflow-y-hidden'>
         {
           conversationMessages.length > 0 ? (
             conversationMessages.map((item, index) => (
@@ -76,7 +76,7 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
             ))
           )
             : (
-              <p className='text-white text-center font-bold pt-8 text-xl md:text-3xl' >Select Contact before starting a chat</p>
+              <p className='text-white text-center font-bold mt-8 text-xl md:text-3xl' >Select Contact before starting a chat</p>
             )
 
         }
