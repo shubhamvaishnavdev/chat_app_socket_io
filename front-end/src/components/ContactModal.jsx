@@ -13,15 +13,14 @@ const {createContact} = useContacts();
     const handleContactModalClick = () => {
         createContact(idRef.current.value, nameRef.current.value);
         setModal(false);
-
     };
-
+console.log("modal at contactmodal " + modal);
     return (
-        <div className={modal ? 'block ' : 'hidden'} >
+        <div className={modal ? ' block z-50' : 'hidden'} >
             {modal ? (
                 <>
                     <div
-                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "
+                        className="modal justify-center items-center flex overflow-x-hidden overflow-y-hidden fixed inset-0 z-50 outline-none focus:outline-none  "
                     >
                         <div className="relative w-auto my-6 mx-auto max-w-3xl border-2 border-black rounded-lg ">
                             {/*content*/}
@@ -60,7 +59,7 @@ const {createContact} = useContacts();
                                     >
                                         Close
                                     </button>
-                                    <button
+                                    <button 
                                         className="bg-black  text-white active:bg-sky-600 font-bold uppercase text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
                                         onClick={handleContactModalClick}
@@ -71,9 +70,10 @@ const {createContact} = useContacts();
                             </div>
                         </div>
                     </div>
-                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                    <div  
+                    className="opacity-25 fixed inset-0 z-20 bg-black"></div>
                 </>
-            ) : null}
+            ) : "null"}
 
         </div>
     )

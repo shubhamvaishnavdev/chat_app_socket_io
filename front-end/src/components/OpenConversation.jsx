@@ -50,6 +50,7 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
       (message.sender === selectedContactId && message.selectedContactId === id)
   );
 
+  
   return (
     <div className='z-0 absolute right-0 top-0 min-h-full w-[100%] flex flex-col bg-gray-900 
     md:w-[75%] '>
@@ -63,6 +64,7 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
           }
         </div>
       </div>
+
       <ScrollToBottom className='flex flex-col gap-4 px-4 pt-10 pb-20 md:pt-4 overflow-y-hidden'>
         {
           conversationMessages.length > 0 ? (
@@ -76,7 +78,7 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
             ))
           )
             : (
-              <p className='text-white text-center font-bold mt-8 text-xl md:text-3xl' >Select Contact before starting a chat</p>
+              <p className='text-white text-center font-bold mt-8 text-xl md:text-3xl overflow-y-hidden' >Select Contact before starting a chat</p>
             )
 
         }
