@@ -17,7 +17,7 @@ const SocketProvider = ({ id, children }) => {
     setSocket(newSocket)
 
     return () => newSocket.close()
-  }, [id])
+  }, [id,ENDPOINT])
 
   // console.log("process.env.REACT_APP_BACK_END_URL at socket provider: " + process.env.REACT_APP_BACK_END_URL);
   return (
