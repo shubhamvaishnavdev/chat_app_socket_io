@@ -3,20 +3,17 @@ import io from 'socket.io-client';
 
 const socketContext = createContext();
 
- function useSocket() {
+function useSocket() {
   return useContext(socketContext)
 }
 
- const SocketProvider = ({ id, children }) => {
+const SocketProvider = ({ id, children }) => {
   const [socket, setSocket] = useState()
+  const ENDPOINT = process.env.REACT_APP_BACK_END_URL
 
   useEffect(() => {
 
-    const newSocket = io.connect(
-      
-      process.env.REACT_APP_BACK_END_URL,
-      { query: { id } }
-    )
+    const newSocket = io.connect(ENDPOINT, { query: { id } })
     setSocket(newSocket)
 
     return () => newSocket.close()
@@ -32,6 +29,6 @@ const socketContext = createContext();
 
 
 
-export {useSocket,SocketProvider, socketContext}
+export { useSocket, SocketProvider, socketContext }
 
 

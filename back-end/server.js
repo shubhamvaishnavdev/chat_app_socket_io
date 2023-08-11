@@ -5,11 +5,11 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 require("dotenv").config();
 
+const server = http.createServer(app);
 
 //middleware
 app.use(cors());
 
-const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
@@ -18,14 +18,12 @@ const io = new Server(server, {
     },
 })
 io.on('connection', socket => {
-    // console.log("USER CONNECTED");
 
     //events
     const id = socket.handshake.query.id
     socket.join(id)
 
     socket.on('send-message', ({ sender, selectedContactId, messageData }) => {
-        // console.log("sender: " + sender + "  selected id: " + selectedContactId + "message data: " + messageData);
 
         socket.to(selectedContactId).emit('receive-message', {
             sender,
@@ -38,6 +36,10 @@ io.on('connection', socket => {
         console.log("USER DISCONNECTED");
     })
 })
+
+app.get("/", (req, res) => {
+    res.send({ response: "Socket Server is up and running." }).status(200);
+  });
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {

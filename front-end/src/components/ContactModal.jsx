@@ -14,7 +14,7 @@ const {createContact} = useContacts();
         createContact(idRef.current.value, nameRef.current.value);
         setModal(false);
     };
-console.log("modal at contactmodal " + modal);
+
     return (
         <div className={modal ? ' block z-50' : 'hidden'} >
             {modal ? (
