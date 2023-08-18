@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContacts } from '../contexts/ContactsProvider';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { BsTrash3 } from 'react-icons/bs';
 import { useNotify } from '../contexts/NotificationProvider';
 
+const Contacts = ({ id, setModal, reset, setReset }) => {
 
-const Contacts = ({ id, setModal }) => {
-
-  const { contacts, setContacts, selectContactForConversation } = useContacts();
+  const { contacts, setContacts, selectedContactId, selectContactForConversation } = useContacts();
   const { notify } = useNotify();
   const [activeContact, setActiveContact] = useState(0);
 
@@ -17,8 +16,20 @@ const Contacts = ({ id, setModal }) => {
     setContacts(afterDeletion);
   }
 
+  function handleReset(){
+    localStorage.clear();
+    setReset(prev => !prev);
+  }
+useEffect(()=>{
+  if(selectedContactId === 1){
+    selectContactForConversation(contacts[0].id)
+  }
+},[selectContactForConversation])
+
+
+
   return (
-    <div className='h-full flex flex-col justify-between'>
+    <div className={`h-full flex-col justify-between ${reset ? 'hidden' : 'flex'}`}>
       <div className={`flex flex-col gap-1 `}>
         {contacts.length !== 0 ?
           (//provide name of every contacts
@@ -43,7 +54,7 @@ const Contacts = ({ id, setModal }) => {
       </div>
       <div>
         <button
-          onClick={() => localStorage.clear()}
+          onClick={handleReset}
           className='h-[3rem] w-full border-t-2 border-black text-white bg-gray-700' >Reset Everything
         </button>
         <CopyToClipboard text={id}>

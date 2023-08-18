@@ -22,6 +22,7 @@ const NotificationProvider = ({ children }) => {
           { position: toast.POSITION.TOP_CENTER }
         );
         break;
+      
 
       case 'ERROR':
         toast.error("something worng!!",

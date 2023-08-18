@@ -1,25 +1,29 @@
 import React from 'react';
 import { Auth, Dashboard } from './components/index';
-import useLocalStorage from './utils/useLocalStorage';
 import { ContactsProvider } from './contexts/ContactsProvider';
 import { SocketProvider } from './contexts/SocketProvider';
 import { NotificationProvider } from './contexts/NotificationProvider';
+import { useGlobalInfo } from './contexts/GlobalInformationProvider';
+
 
 const App = () => {
-  const [id, setId] = useLocalStorage('id', '');
+  // const [id, setId] = useLocalStorage('id', '');
+  const {id} = useGlobalInfo();
   const dashboard = (
-    <SocketProvider id={id} >
-      <NotificationProvider>
-        <ContactsProvider>
-          <Dashboard id={id} />
-        </ContactsProvider>
-      </NotificationProvider>
-    </SocketProvider>
+      <SocketProvider>
+        <NotificationProvider>
+          <ContactsProvider>
+            <Dashboard />
+          </ContactsProvider>
+        </NotificationProvider>
+      </SocketProvider>
   )
 
   return (
     <>
-      {id !== '' ? dashboard : <Auth setId={setId} />}
+      {
+        id !== '' ? dashboard : <Auth />
+      }
     </>
   )
 }

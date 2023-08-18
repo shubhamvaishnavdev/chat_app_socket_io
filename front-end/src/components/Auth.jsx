@@ -1,20 +1,22 @@
 import React, { useRef } from 'react'
 import {v4 as uuidv4} from 'uuid';
+import { useGlobalInfo } from '../contexts/GlobalInformationProvider';
 
-const Auth = ({setId}) => {
+const Auth = () => {
 
     const inputId = useRef(null);
-
+    const {id, setId, reset, setReset} = useGlobalInfo();
     const handleLogin = () => {
         setId(inputId.current.value)
     }
 
     const handleCreateId = () => {
         setId(uuidv4());
+        setReset(prev=>!prev)
     }
 
   return (
-    <div className='h-[100vh] w-full flex flex-col flex-wrap justify-center items-center text-black bg-gradient-to-r from-blue-600 to-violet-600' >
+    <div className={`${ reset ? 'flex' : id === '' ? 'flex' :'hidden'} h-[100vh] w-full  flex-col flex-wrap justify-center items-center text-black bg-gradient-to-r from-blue-600 to-violet-600 `} >
         <div className='w-[50%]'>
             <label htmlFor="auth" className='text-white font-bold'>ID</label>
             <input type="text" id='auth' placeholder='Enter ID here' ref={inputId}
