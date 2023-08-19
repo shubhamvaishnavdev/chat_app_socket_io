@@ -3,29 +3,26 @@ import { Auth, Dashboard } from './components/index';
 import { ContactsProvider } from './contexts/ContactsProvider';
 import { SocketProvider } from './contexts/SocketProvider';
 import { NotificationProvider } from './contexts/NotificationProvider';
-import { useGlobalInfo } from './contexts/GlobalInformationProvider';
-
+import useLocalStorage from './utils/useLocalStorage';
 
 const App = () => {
-  // const [id, setId] = useLocalStorage('id', '');
-  const {id} = useGlobalInfo();
+  const [id, setId] = useLocalStorage('id', '');
+  
   const dashboard = (
-      <SocketProvider>
-        <NotificationProvider>
-          <ContactsProvider>
-            <Dashboard />
-          </ContactsProvider>
-        </NotificationProvider>
-      </SocketProvider>
-  )
+    <SocketProvider id={id} setId={setId} >
+      <NotificationProvider>
+        <ContactsProvider>
+          <Dashboard id={id} setId={setId}/>
+        </ContactsProvider>
+      </NotificationProvider>
+    </SocketProvider>
+  );
 
   return (
     <>
-      {
-        id !== '' ? dashboard : <Auth />
-      }
+      {id !== '' ? dashboard : <Auth id={id} setId={setId}/>}
     </>
-  )
-}
+  );
+};
 
 export default App;

@@ -1,11 +1,8 @@
 import React from 'react'
 import { Contacts } from '../components'
 import { AiOutlineClose } from 'react-icons/ai';
-import { useGlobalInfo } from '../contexts/GlobalInformationProvider';
 
 const Sidebar = ({ id, isOpen, setIsOpen, modal, setModal}) => {
-
-    const {reset, setReset} = useGlobalInfo();
 
     return (
         <div className={`${isOpen ? 'fixed z-10 w-[80%] block' : 'hidden'} 
@@ -18,7 +15,7 @@ const Sidebar = ({ id, isOpen, setIsOpen, modal, setModal}) => {
             </div>
             <div className='h-[92%] border-black border-2 border-y-0 bg-gray-800'>
                 {
-                    <Contacts id={id} modal={modal} setModal={setModal} reset={reset} setReset={setReset}/>
+                    <Contacts id={id} modal={modal} setModal={setModal} />
                 }
             </div>
         </div>

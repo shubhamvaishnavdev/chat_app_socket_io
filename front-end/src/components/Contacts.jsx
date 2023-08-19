@@ -4,8 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { BsTrash3 } from 'react-icons/bs';
 import { useNotify } from '../contexts/NotificationProvider';
 
-const Contacts = ({ id, setModal, reset, setReset }) => {
-
+const Contacts = ({ id, setModal }) => {
   const { contacts, setContacts, selectedContactId, selectContactForConversation } = useContacts();
   const { notify } = useNotify();
   const [activeContact, setActiveContact] = useState(0);
@@ -18,10 +17,10 @@ const Contacts = ({ id, setModal, reset, setReset }) => {
 
   function handleReset(){
     localStorage.clear();
-    setReset(prev => !prev);
+    window.location.reload()
   }
 useEffect(()=>{
-  if(selectedContactId === 1){
+  if(contacts.length && selectedContactId === 1){
     selectContactForConversation(contacts[0].id)
   }
 },[selectContactForConversation])
@@ -29,8 +28,8 @@ useEffect(()=>{
 
 
   return (
-    <div className={`h-full flex-col justify-between ${reset ? 'hidden' : 'flex'}`}>
-      <div className={`flex flex-col gap-1 `}>
+    <div className={`h-full flex flex-col justify-between`}>
+      <div className={`h-auto flex flex-col gap-1 `}>
         {contacts.length !== 0 ?
           (//provide name of every contacts
             contacts.map((items, index) => (
@@ -52,7 +51,7 @@ useEffect(()=>{
           (<p className='text-white p-2' >Create new contacts from below</p>)
         }
       </div>
-      <div>
+      <div className='mt-auto w-full'>
         <button
           onClick={handleReset}
           className='h-[3rem] w-full border-t-2 border-black text-white bg-gray-700' >Reset Everything
