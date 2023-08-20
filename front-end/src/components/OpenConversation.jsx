@@ -50,7 +50,7 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
       (message.sender === selectedContactId && message.selectedContactId === id)
   );
 
-  
+
   return (
     <div className='z-0 absolute right-0 top-0 min-h-[100%] w-[100%] flex flex-col bg-gray-900 
     md:w-[75%] '>
@@ -60,7 +60,9 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
           {
             isOpen ?
               ("") :
-              (<AiOutlineMenu onClick={() => setIsOpen(true)} className='text-white text-xl font-bold' />)
+              (<AiOutlineMenu
+                onClick={() => setIsOpen(true)}
+                className='text-white text-xl font-bold' />)
           }
         </div>
       </div>

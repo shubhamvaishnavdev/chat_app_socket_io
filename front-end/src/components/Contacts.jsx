@@ -52,10 +52,11 @@ useEffect(()=>{
         }
       </div>
       <div className='mt-auto w-full'>
-        <button
-          onClick={handleReset}
-          className='h-[3rem] w-full border-t-2 border-black text-white bg-gray-700' >Reset Everything
+      <button
+          onClick={() => setModal(true)}
+          className='h-[3rem] w-full border-t-2 border-black  text-white bg-gradient-to-r from-blue-600 to-violet-600' >New Contacts
         </button>
+        
         <CopyToClipboard text={id}>
           <button
             onClick={() => notify('ID_COPIED')}
@@ -64,8 +65,8 @@ useEffect(()=>{
           </button>
         </CopyToClipboard>
         <button
-          onClick={() => setModal(true)}
-          className='h-[3rem] w-full border-y-2 border-black  text-white bg-gradient-to-r from-blue-600 to-violet-600' >New Contacts
+          onClick={handleReset}
+          className='h-[3rem] w-full border-y-2 border-black text-white bg-gray-700' >Reset Everything
         </button>
       </div>
     </div>
