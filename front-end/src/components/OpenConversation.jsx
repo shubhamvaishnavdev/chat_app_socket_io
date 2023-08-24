@@ -52,7 +52,7 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
 
 
   return (
-    <div className='z-0 absolute right-0 top-0 min-h-[100%] w-[100%] flex flex-col bg-gray-900 
+    <div className='z-0 absolute right-0 top-0 min-h-[100svh] w-[100%] flex flex-col bg-gray-900 
     md:w-[75%] '>
       <div className='fixed z-10 h-8 w-[100%] flex items-center bg-gray-500 md:hidden' >
         <div className=' w-[100%] flex justify-between px-4 items-center'>
@@ -99,7 +99,6 @@ const OpenConversation = ({ id, isOpen, setIsOpen }) => {
             className='h-8 w-16 text-white bg-gradient-to-r from-blue-600 to-violet-600'>send</button>
         </form>
       </div>
-      {/* <div className='absolute right-0 w-[90%] h-full bg-yellow-500 ' >sdsd</div> */}
     </div>
   )
 }
